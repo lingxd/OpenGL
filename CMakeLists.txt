@@ -8,6 +8,7 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/Dependencies/glfw)
 
@@ -18,6 +19,8 @@ add_executable(OpenGL src/Application.cpp)
 target_link_libraries(OpenGL
         glfw
         ${OPENGL_glu_LIBRARY}
-        ${GLFW_LIBRARY}
-        OpenGL::GL)
+        ${GLFW3_LIBRARY}
+        ${GLEW_LIBRARY}
+        OpenGL::GL
+        GLEW::GLEW)
 

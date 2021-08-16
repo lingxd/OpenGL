@@ -1,3 +1,8 @@
-[submodule "Dependencies/glew"]
-	path = Dependencies/glew
+[submodule "Dependencies/glfw"]
+	path = Dependencies/glfw
+	url = https://github.com/glfw/glfw.git
+
+
+[submodule "Dependencies/Dependencies/glew"]
+	path = Dependencies/Dependencies/glew
 	url = https://github.com/Perlmint/glew-cmake.git
