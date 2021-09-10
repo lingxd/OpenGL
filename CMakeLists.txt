@@ -9,18 +9,24 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(GLUT REQUIRED)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/Dependencies/glfw)
+add_subdirectory(${PROJECT_SOURCE_DIR}/Dependencies/glew)
 
 include_directories(${PROJECT_SOURCE_DIR}/Dependencies/glfw/include)
+include_directories(${PROJECT_SOURCE_DIR}/Dependencies/glew/include)
+include_directories(${OPENGL_INCLUDE_DIRS})
+include_directories(${GLUT_INCLUDE_DIRS})
 
 add_executable(OpenGL src/Application.cpp)
 
 target_link_libraries(OpenGL
         glfw
-        ${OPENGL_glu_LIBRARY}
-        ${GLFW3_LIBRARY}
+        libglew_static
+        ${OPENGL_LIBRARY}
+        ${GLFW_LIBRARY}
         ${GLEW_LIBRARY}
-        OpenGL::GL
-        GLEW::GLEW)
+        ${GLUT_LIBRARY}
+        OpenGL::GL)
 
