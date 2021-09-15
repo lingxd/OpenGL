@@ -6,17 +6,18 @@
 #include <GL/glut.h>
 #include <GLFW/glfw3.h>
 
-#include <iostream>
 #include <fstream>
-#include <string>
+#include <iostream>
 #include <sstream>
+#include <string>
 
 struct ShaderProgramSource {
     std::string VertexSource;
     std::string FragmentSource;
 };
 
-static ShaderProgramSource ParseShader(const std::string &filepath)
+static ShaderProgramSource
+ParseShader(const std::string &filepath)
 {
     std::ifstream stream(filepath);
 
@@ -38,19 +39,17 @@ static ShaderProgramSource ParseShader(const std::string &filepath)
             if (line.find("vertex") != std::string::npos)
             {
                 type = ShaderType::VERTEX;
-            }
-            else if (line.find("fragment") != std::string::npos)
+            } else if (line.find("fragment") != std::string::npos)
             {
                 type = ShaderType::FRAGMENT;
             }
-        }
-        else
+        } else
         {
-            ss[(int)type] << line << "\n";
+            ss[(int) type] << line << "\n";
         }
     }
 
-    return { ss[0].str(), ss[1].str()};
+    return { ss[0].str(), ss[1].str() };
 }
 
 static unsigned int
@@ -128,16 +127,20 @@ main(int argc, char **argv)
 
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    float positions[6] = {
+    float positions[] = {
         -0.5f, -0.5f,
-        0.0f, 0.5f,
-        0.5f, -0.5f
+        0.5f, -0.5f,
+        0.5f, 0.5f,
+
+        0.5f, 0.5f,
+        -0.5f, 0.5f,
+        -0.5f, -0.5f
     };
 
     unsigned int buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, nullptr);
@@ -155,7 +158,7 @@ main(int argc, char **argv)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
