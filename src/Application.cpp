@@ -128,14 +128,21 @@ main(int argc, char **argv)
     std::cout << glGetString(GL_VERSION) << std::endl;
 
     float positions[] = {
-        -0.5f, -0.5f,
-        0.5f, -0.5f,
-        0.5f, 0.5f,
-
-        0.5f, 0.5f,
-        -0.5f, 0.5f,
-        -0.5f, -0.5f
+        -0.5f, -0.5f,//1
+        0.5f, -0.5f, //2
+        0.5f, 0.5f,  //3
+        -0.5f, 0.5f, //4
     };
+
+    /**
+     * @brief index buffers
+     */
+    unsigned int indices[] = {
+        0, 1, 2,
+        2, 3, 0
+    };
+
+
 
     unsigned int buffer;
     glGenBuffers(1, &buffer);
@@ -144,6 +151,11 @@ main(int argc, char **argv)
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, nullptr);
+
+    unsigned int ibo;
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 
     ShaderProgramSource source = ParseShader("../res/shaders/Basic.shader");
 
